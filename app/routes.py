@@ -53,7 +53,7 @@ def novaAtividade():
         nome = request.form['nomeAtividade']
         status = request.form['status']
 
-        atividade = Atividade(id_atividade=5, nome =nome, status=status)
+        atividade = Atividade(id_atividade=5, nome=nome, status=status)
         db.session.add(atividade)
         db.session.commit()
         return redirect('/listaAtividade')
@@ -68,3 +68,10 @@ def listaAtividade():
         print(i.id_atividade, i.nome, i.status)
     
     return render_template("/atividade.html", atividades=atividades)
+
+@app.route('/edita_atividade/<int:idAtiv>', methods=['POST', 'GET'] )
+def edita_atividade(idAtiv):
+    if request.method == 'POST':
+        nome =  request.form['nomeAtividade']
+        status =  request.form['status']
+
