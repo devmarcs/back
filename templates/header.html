@@ -4,7 +4,9 @@
       <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i
           class="ti-menu ti-close"></i></a>
   
-          <a class="navbar-brand" href="{{ url_for('dashboard') }}">
+          <!-- aqui deverá ter um url_for para dashboard -->
+
+         
           <b class="logo-icon p-l-10">
               <img src="{{ url_for('static', filename='Icons/png/caixa.png') }}" alt="Ícone PNG" style="width: 30%;"> ESTOQUE
           </b>
@@ -28,7 +30,8 @@
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="javascript:void(0)"><i class="ti-settings m-r-5 m-l-5"></i> Account Setting</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="{{ url_for('logout') }}"><i class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a>
+                  <!-- aque liga a rota logout-->
+                  <a class="dropdown-item" href="#"><i class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a>
               </div>
           </li>
           

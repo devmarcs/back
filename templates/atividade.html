@@ -11,37 +11,37 @@
 
   <h2>Cadastro de Atividade</h2>
  
-  <form id="atividadeForm" action="/atividade/save" method="post">
+  <form id="atividadeForm" action="/novaAtividade" method="post">
       <div class="form-group">
-          <label for="nomeAtividade">Nome da Categoria:</label>
+          <label for="nomeAtividade">Nome da Atividade:</label>
           <input type="text" 
                     class="form-control" 
                     id="nomeAtividade" 
                     placeholder="Ex: limpeza" 
                     name="nomeAtividade"
-                    value="{{atividade[0][1]}}"
+                    
                     required>
             <label for = "status"> status</label>
-            <select type="text" id="status" name="status" value="{{atividade[#][#]}}">
+            <select type="text" id="status" name="status">
                 <option>iniciar</option>
                 <option>em andamento</option>
                 <option>finalizado</option>
             </select>
       </div>
 
-      <input type="hidden" name="id" value="{{atividade[0][0]}}">
+      <input type="hidden" name="id">
 
       <button type="submit" class="btn btn-primary">
-        {% if dados %}
+        {% if atividades %}
             Adicionar 
         {% else %}
             Atualizar 
         {% endif %}
-        Categoria
+        Atividade
       </button>
   </form>
   
-  {% if dados %}
+  {% if atividades %}
   <br><br>
   <h2>Lista de Atividade</h2>
     <div class="table-responsive">
@@ -50,26 +50,26 @@
             <tr>
                 <th>ID</th>
                 <th>Nome da Atividade</th>
-                <th>Opções</th>
+                <th>status</th>
             </tr>
         </thead>
         <tbody>
             
-            {% for atividade in dados %}
+            {% for atividade in atividades %}
             <tr>
-                <td>{{atividade[0]}}</td>
-                <td>{{atividade[1]}}</td>
-                <td>
-
+                <td>{{atividade.id_atividade}}</td>
+                <td>{{atividade.nome}}</td>
+                <td>{{atividade.status}}</td>
+                
                     <a class="btn btn-warning btn-xs"
-                        href="/atividade/edit/{{atividade[0]}}">
+                        href="/atividade/edit/{{atividade.id_atividade}}">
                         <i class="fas fa-edit"></i>
-                    </a>
+                    EDITAR</a>
                     
                     <a class="btn btn-danger btn-xs"
-                        href="/atividade/delete/{{atividade[0]}}">
+                        href="/atividade/delete/{{atividade.id_atividade}}">
                         <i class="far fa-times-circle"></i>
-                    </a>
+                    EXCLUIR</a>
             
                 </td>
             </tr>

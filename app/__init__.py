@@ -5,7 +5,7 @@ from sqlalchemy.exc import IntegrityError
 from flask_cors import CORS
 
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="../templates")
 CORS(app, origins="http://127.0.0.1:5001", allow_headers="*", supports_credentials=True)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///dados.db'  
@@ -15,4 +15,5 @@ migrate = Migrate(app, db)
 from app import routes
 
 with app.app_context():
+    db.drop_all()
     db.create_all()

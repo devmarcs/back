@@ -1,4 +1,4 @@
-from flask import request, jsonify, make_response
+from flask import request, jsonify, make_response, render_template, redirect, url_for
 from app import app, db
 from sqlalchemy.exc import IntegrityError
 from datetime import datetime
@@ -12,6 +12,9 @@ from app.models.modelos import Atividade
 # Update -> Atualiza um recurso -> PUT
 # Delete -> Apaga um recurso -> DELETE
 
+@app.route("/")
+def index():
+    return render_template('/menu.html')
 # Read
 #Rota que lista todas as casas existes
 @app.route("/casa", methods=['GET'])
@@ -44,42 +47,24 @@ def create_casa():
 
 @app.route('/novaAtividade', methods=['POST', 'GET'])
 def novaAtividade():
-    if request.method== "POST":
-        atividades = request.json
-        nome = atividades['nomeAtividade']
-        status = atividades['status']
+   
+    if request.method=='POST':
+   
+        nome = request.form['nomeAtividade']
+        status = request.form['status']
 
-        atividade = Atividade(nome =nome, status=status, rua= rua)
-        db.session.add()
+        atividade = Atividade(id_atividade=5, nome =nome, status=status)
+        db.session.add(atividade)
         db.session.commit()
-        return jsonify({'status': 201, 'message': 'Casa criada com sucesso'}), 201
+        return redirect('/listaAtividade')
+        #return jsonify({'status': 201, 'message': 'Atividade criada com sucesso'}), 201
+   
+    return render_template('/atividade.html')
 
-
-
-
-"""
-
-# Excluir uma categoria
-@app.route('/categoria/<int:categoria_id>', methods=['DELETE'])
-def delete_categoria(categoria_id):
-    categoria = Categoria.query.get(categoria_id)
-    if categoria is None:
-        return jsonify({'error': 'Categoria não encontrada'}), 404
-    db.session.delete(categoria)
-    db.session.commit()
-    return jsonify({'message': 'Categoria excluída com sucesso'})
-
-
-# Atualizar uma venda
-@app.route('/categoria/<int:categoria_id>', methods=['PUT'])
-def update_categoria(categoria_id):
-    categoria = Categoria.query.get(categoria_id)
-    if categoria is None:
-        return jsonify({'error': 'Categoria não encontrada'}), 404
-    data = request.json
-    categoria.nome = data['nome']
-    categoria.descricao = data['descricao']
-    categoria.tipo = data['tipo']
-    db.session.commit()
-    return jsonify({'message': 'Categoria atualizada com sucesso'})
-"""
+@app.route('/listaAtividade', methods=["GET"])
+def listaAtividade():
+    atividades = Atividade.query.all()
+    for i in atividades:
+        print(i.id_atividade, i.nome, i.status)
+    
+    return render_template("/atividade.html", atividades=atividades)
